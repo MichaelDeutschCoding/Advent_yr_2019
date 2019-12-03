@@ -11,6 +11,7 @@ def op2(i):
     codes[codes[i+3]] = val1 * val2
 
 def walk():
+    codes[1], codes[2] = 12, 2
     for i in range(0, len(codes), 4):
         if codes[i] == 99:
             return codes[0]
@@ -19,26 +20,27 @@ def walk():
         elif codes[i] == 2:
             op2(i)
         else:
-            raise ValueError
-
+            assert 1 ==2
 
 # print(walk())
 
-for noun in range(100):
-    for verb in range(100):
-        memory = [val for val in codes]
-        memory[1] = noun
-        memory[2] = verb
-        for i in range(0, len(memory), 4):
-            op = memory[i]
-            lhs_loc, rhs_loc, dest_loc = memory[i + 1], memory[i + 2], memory[i + 3]
-            if op == 1:
-                memory[dest_loc] = memory[lhs_loc] + memory[rhs_loc]
-            elif op == 2:
-                memory[dest_loc] = memory[lhs_loc] * memory[rhs_loc]
-            else:
-                assert (op == 99)
-                break
-        if memory[0] == 19690720:
-            print('noun:', noun, 'verb:', verb)
-            print('100 * noun + verb:', 100 * noun + verb)
+
+def part2():
+    for noun in range(100):
+        for verb in range(100):
+            memory = [num for num in codes]
+            memory[1], memory[2] = noun, verb
+            for i in range(0, len(memory), 4):
+                op = memory[i]
+                lhs_loc, rhs_loc, dest_loc = memory[i + 1], memory[i + 2], memory[i + 3]
+                if op == 1:
+                    memory[dest_loc] = memory[lhs_loc] + memory[rhs_loc]
+                elif op == 2:
+                    memory[dest_loc] = memory[lhs_loc] * memory[rhs_loc]
+                else:
+                    assert (op == 99)
+                    break
+            if memory[0] == 19690720:
+                return (100 * noun + verb)
+
+# print(part2())            
